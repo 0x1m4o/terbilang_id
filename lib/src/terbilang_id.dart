@@ -2,7 +2,11 @@ import 'check_utils.dart';
 import 'extensions.dart';
 
 class Terbilang {
-  static String format(num value) {
+  static String format(
+    num value, {
+    String? prefix,
+    String? suffix,
+  }) {
     final number = value.toStringAsFixed(0);
     final len = number.length;
     String result = "";
@@ -64,6 +68,9 @@ class Terbilang {
       }
     }
     result = result.replaceAll("  ", " ");
+    result = '${prefix != null ? '$prefix ' : ''}'
+        '$result'
+        '${suffix != null ? ' $suffix' : ''}';
     return result;
   }
 
