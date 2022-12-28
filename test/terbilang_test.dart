@@ -371,5 +371,16 @@ void main() {
       expect(Terbilang.format(999999999999).toLowerCase(),
           "sembilan ratus sembilan puluh sembilan miliar sembilan ratus sembilan puluh sembilan juta sembilan ratus sembilan puluh sembilan ribu sembilan ratus sembilan puluh sembilan");
     });
+
+    test("test prefix and suffix", () {
+      expect(Terbilang.format(11110, prefix: 'sebesar').toLowerCase(),
+          "sebesar sebelas ribu seratus sepuluh");
+      expect(Terbilang.format(10111110, suffix: 'rupiah').toLowerCase(),
+          "sepuluh juta seratus sebelas ribu seratus sepuluh rupiah");
+      expect(
+          Terbilang.format(301110003000, prefix: 'sebesar', suffix: 'rupiah')
+              .toLowerCase(),
+          "sebesar tiga ratus satu miliar seratus sepuluh juta tiga ribu rupiah");
+    });
   });
 }
