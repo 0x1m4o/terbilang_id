@@ -1,22 +1,21 @@
-import 'package:terbilang_id/src/check_utils.dart';
-
+import 'check_utils.dart';
 import 'extensions.dart';
 
 class Terbilang {
-  String terbilang(double value) {
+  static String format(num value) {
     final number = value.toStringAsFixed(0);
     final len = number.length;
     String result = "";
     for (var i = 0; i < len; i++) {
       final length = len - i;
-      final delimiter = CheckUtils().pointer(length);
+      final delimiter = CheckUtils.pointer(length);
 
       if (delimiter == 3) {
         if (number[i].isNol) continue;
         result += _ratusan(number[i], currIndex: i, len: len, number: number);
       } else if (delimiter == 2) {
         if (number[i].isSatu && !number[i + 1].isNol) {
-          result += belasan(number[i], currIndex: i, len: len, number: number);
+          result += _belasan(number[i], currIndex: i, len: len, number: number);
         } else {
           if (number[i].isNol) continue;
 
@@ -48,17 +47,17 @@ class Terbilang {
 
       if (length == 10) {
         final tripleZero =
-            CheckUtils().checkZero(number: number, len: len, currIndex: i);
+            CheckUtils.checkZero(number: number, len: len, currIndex: i);
         if (tripleZero == 3) continue;
         result += _miliaran(number[i], currIndex: i, len: len, number: number);
       } else if (length == 7) {
         final tripleZero =
-            CheckUtils().checkZero(number: number, len: len, currIndex: i);
+            CheckUtils.checkZero(number: number, len: len, currIndex: i);
         if (tripleZero == 3) continue;
         result += _jutaan(number[i], currIndex: i, len: len, number: number);
       } else if (length == 4) {
         final tripleZero =
-            CheckUtils().checkZero(number: number, len: len, currIndex: i);
+            CheckUtils.checkZero(number: number, len: len, currIndex: i);
         if (tripleZero == 3) continue;
 
         result += _ribuan(number[i], currIndex: i, len: len, number: number);
@@ -68,8 +67,12 @@ class Terbilang {
     return result;
   }
 
-  String _miliaran(String value1,
-      {required String number, required int len, required int currIndex}) {
+  static String _miliaran(
+    String value1, {
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     String result = "";
     try {
       if (value1.isSatu) {
@@ -89,8 +92,12 @@ class Terbilang {
     return result;
   }
 
-  String _jutaan(String value1,
-      {required String number, required int len, required int currIndex}) {
+  static String _jutaan(
+    String value1, {
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     String result = "";
     // 100.000.000
     // 110.000.000
@@ -112,8 +119,12 @@ class Terbilang {
     return result;
   }
 
-  String _ribuan(String value1,
-      {required String number, required int len, required int currIndex}) {
+  static String _ribuan(
+    String value1, {
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     String result = "";
     try {
       if (value1.isSatu) {
@@ -133,8 +144,12 @@ class Terbilang {
     return result;
   }
 
-  String _ratusan(String value1,
-      {required String number, required int len, required int currIndex}) {
+  static String _ratusan(
+    String value1, {
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     String result = "";
     if (value1.isSatu) {
       result += "Seratus";
@@ -145,7 +160,7 @@ class Terbilang {
     return result;
   }
 
-  String _puluhan(String value1, String value2) {
+  static String _puluhan(String value1, String value2) {
     if (value1.isSatu) {
       return "Sepuluh";
     } else {
@@ -153,8 +168,12 @@ class Terbilang {
     }
   }
 
-  String belasan(String value1,
-      {required String number, required int len, required int currIndex}) {
+  static String _belasan(
+    String value1, {
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     String result = "";
     if (number[currIndex + 1].isSatu) {
       result += "Sebelas";
@@ -167,7 +186,11 @@ class Terbilang {
     return result;
   }
 
-  String _satuan(String value, {bool unique = false, bool isJutaan = false}) {
+  static String _satuan(
+    String value, {
+    bool unique = false,
+    bool isJutaan = false,
+  }) {
     if (value.isSatu) {
       if (isJutaan) {
         return "Satu ";
@@ -194,7 +217,7 @@ class Terbilang {
     }
   }
 
-  String _addWhitespace(int currIndex, int len, String number) {
+  static String _addWhitespace(int currIndex, int len, String number) {
     var result = "";
     // 100.100.000.000
     for (var i = currIndex + 1; i < len; i++) {
