@@ -1,7 +1,7 @@
 import 'extensions.dart';
 
 class CheckUtils {
-  int pointer(int len) {
+  static int pointer(int len) {
     int result = 0;
     for (var i = 0;;) {
       final dec = len - i;
@@ -15,8 +15,11 @@ class CheckUtils {
     return result;
   }
 
-  int checkZero(
-      {required String number, required int len, required int currIndex}) {
+  static int checkZero({
+    required String number,
+    required int len,
+    required int currIndex,
+  }) {
     //1.000.000, 7, 3
     //100.000, 6, 2
     //11.000, 5,
